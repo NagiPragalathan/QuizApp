@@ -53,6 +53,13 @@ def add_folder(request):
 
     return render(request, 'file_manager/add_folder.html')
 
-def list_folders(request):
-    folders = FolderManager.objects.all()
-    return render(request, 'file_manager/list_folder.html', {'folders': folders})
+def list_folders(request, path):
+    user = request.user
+    Files = PathManager.objects.filter(user_id=user, path=path)
+    folders = FolderManager.objects.filter(user_id=user, path=path).order_by('FolderName')
+    Files = sorted(Files, key=lambda x: x.file.name)
+    for file in Files:
+        file_extension = file.file.name.split('.')[-1].lower()
+        file.icon_path = f'/static/images/Folders/{file_extension}.png'  # Adjust the path as needed
+    
+    return render(request, 'file_manager/Manager.html', {'path':path,'folders': folders, 'files': Files})
