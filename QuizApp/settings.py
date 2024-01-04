@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure--h7%djp0$q6wh&k3$x@#51=1(h38d5s$iz6&c&pe2)7+(ro(4#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "base"
+    "base",
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -48,8 +49,14 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    'http://127.0.0.1:8000',  # Replace with the actual port you are using
+    'http://localhost:8000',
+    # Add other allowed origins as needed
+]
 ROOT_URLCONF = "QuizApp.urls"
 
 TEMPLATES = [

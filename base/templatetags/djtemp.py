@@ -1453,6 +1453,28 @@ def rstrip(original_string: str, chars: str = None) -> str:
     return original_string.rstrip(chars)
 
 @register.filter
+def split_path(value):
+    return value.split('/')
+
+@register.filter
+def goback(value):
+    sample=value.split('.')
+    sample.pop()
+    out = ".".join(sample)
+    return out
+
+@register.filter(name='part')
+def part_filter(value, arg):
+    # Implement the logic of your 'part' filter
+    # For example, you might split the value by a delimiter and return a specific part
+    parts = value.split('.')
+    return parts[arg] if arg < len(parts) else ''
+
+@register.filter
+def last_path(value):
+    return value.split('/')[-1]
+
+@register.filter
 def split(original_string: str, separator: str = None, maxsplit: int = -1) -> list:
     '''
     Custom filter to split the string at the specified separator.
